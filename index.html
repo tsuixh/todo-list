@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>todo-list</title>
+	<script type="text/javascript" src="./vue2.5.17.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model="inputValue"/>
+		<button @click="handleBtnClick">Submit</button>
+		<ul>
+			<li v-for="item in list">{{item}}</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		let app = new Vue({
+			el: '#app',
+			data: {
+				list: [],
+				inputValue: ''
+			},
+			methods: {
+				handleBtnClick () {
+					this.list.push(this.inputValue)
+					this.inputValue = ''
+				}
+			}
+		})
+	</script>
+</body>
+</html>
