@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>todo-list</title>
+	<script type="text/javascript" src="./vue2.5.17.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model="inputValue"/>
+		<button @click="handleBtnClick">Submit</button>
+		<ul>
+			<todo-item :content="item" :idx="idx" v-for="(item, idx) in list" @delete="handleItemDelete"></todo-item>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		/*Vue.component("TodoItem", {
+			props: ['content'],
+			template: "<li>{{content}}</li>"
+		})*/
+
+		// 定义TodoItem组件
+		let TodoItem = {
+			props: ['content', "idx"],
+			template: "<li @click='handleItemClick'>{{content}}</li>",
+			methods: {
+				// 父组件向子组件传值
+				handleItemClick () {
+					this.$emit("delete", this.idx)
+				}
+			}
+		}
+		let app = new Vue({
+			el: '#app',
+			components: {
+				TodoItem: TodoItem
+			},
+			data: {
+				list: [],
+				inputValue: ''
+			},
+			methods: {
+				handleBtnClick () {
+					this.list.push(this.inputValue)
+					this.inputValue = ''
+				},
+				handleItemDelete (idx) {
+					this.list.splice(idx, 1)
+				}
+			}
+		})
+	</script>
+</body>
+</html>
